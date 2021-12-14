@@ -1,6 +1,9 @@
 http://localhost:8626/api/v1/user
+http://localhost:8626/api/v1/user/register
+http://localhost:8626/api/v1/user/login
 
 
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWI4OGE3N2E3NWNhNGU1ZDhhOWJhMzIiLCJlbWFpbCI6ImJ2QGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNjM5NDkwMTQxLCJleHAiOjE2Mzk1NzY1NDF9.pMUokRN_6fw5UijPAwApjkAt9y4Uxx57W6pwkOt41sw
 
 
 http://localhost:8626/api/v1/product
