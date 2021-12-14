@@ -1,0 +1,54 @@
+Download mongodb from website and uncheck install as service option while installing
+Path for mongodb installation - C:\Program Files\MongoDB\Server\5.0\bin  
+mongo - shell command for connecting and accesing to server its a command
+C:\Program Files\MongoDB\Server\5.0\bin
+create directory - C:\data\data1  for creaitng mongodb dataase
+mongod --dbpath c:\data\data1\ --port 27017  for staring server 
+use mongo shell to connect to database
+show databases -- shwoing databases
+use simpli; - creating database
+db.students.insertOne({name:"Depak"});  -- create record and students is the collection
+db.students.find() -- finding
+
+https://drive.google.com/drive/folders/10lejgNV5iDx1RTX9kcnCVfCVavIaW1aJ
+
+https://drive.google.com/drive/folders/10lejgNV5iDx1RTX9kcnCVfCVavIaW1aJ
+
+
+REPLICA SET Configurairon:
+
+27017 P 27018 R 27019 L
+
+create directory data1 data2 data3 folder under C:/data
+
+mongod --dbpath c:\data\data1\ --port 27017 --replSet rs0 --oplogSize 128 
+mongod --dbpath c:\data\data2\ --port 27018 --replSet rs0 --oplogSize 128 
+mongod --dbpath c:\data\data3\ --port 27019 --replSet rs0 --oplogSize 128
+
+--logpath c:\data\log\mongo1.log 
+
+mongo --port 27017
+mongo --port 27018
+mongo --port 27019
+
+rs.initiate();   -- to set primary node click enter after secondary 
+
+rs.add("localhost:27018");
+rs.add("localhost:27019");
+
+rs.status()
+
+GRIDFS - mongofiles
+
+mongofiles -d gridfs put c:\data\movie.mp4
+
+mongofiles -d gridfs put D:\Mongodb\movie.mp4   -- switch to folder bin and execute after connecting to mongodb 
+
+db.fs.files.find();
+db.fs.chunks.find();
+
+D:\Mongodb
+
+db.fs.files.find().explain();
+db.serverStatus()
+db.enableFreeMonitoring()

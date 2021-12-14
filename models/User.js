@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+/*const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
@@ -46,3 +46,4 @@ UserSchema.methods.comparePassword = async function (canditatePassword) {
 }
 
 module.exports = mongoose.model('User', UserSchema)
+*/
