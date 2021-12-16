@@ -76,10 +76,28 @@ const deleteProductById = async (req, res) => {
   res.status(StatusCodes.OK).json({ statusMsg: "success", data });
 };
 
+const getMostPurchasedProducts = async (req, res) => {
+  const data = await productModel.find({}).sort({ purchases: -1 }).limit(5);
+  res.status(StatusCodes.OK).json({ statusMsg: "success", data });
+};
+
+const getMostViewedProducts = async (req, res) => {
+  const data = await productModel.find({}).sort({ views: -1 }).limit(5);
+  res.status(StatusCodes.OK).json({ statusMsg: "success", data });
+};
+
+const getAllCategories = async (req, res) => {
+  const data = await productModel.find({}).distinct("category.catName");
+  res.status(StatusCodes.OK).json({ statusMsg: "success", data });
+};
+
 module.exports = {
   getAllProducts,
   getProductById,
   createProduct,
   updateProductById,
   deleteProductById,
+  getMostPurchasedProducts,
+  getMostViewedProducts,
+  getAllCategories,
 };

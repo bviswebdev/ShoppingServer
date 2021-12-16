@@ -7,10 +7,16 @@ const {
   createProduct,
   updateProductById,
   deleteProductById,
+  getMostPurchasedProducts,
+  getMostViewedProducts,
+  getAllCategories,
 } = require("../controllers/product");
 //router.post("/register", register);
 //router.post("/login", login);
 
+router.route("/mvproducts").get(getMostViewedProducts);
+router.route("/mpproducts").get(getMostPurchasedProducts);
+router.route("/categories").get(getAllCategories);
 router.route("/").get(getAllProducts).post(auth, authAdmin, createProduct);
 router
   .route("/:id")
