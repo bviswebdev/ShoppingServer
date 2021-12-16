@@ -1,10 +1,10 @@
 {
     "firstName": "Balaji",
     "lastName": "Visvanathan",
-    "role": "USER",
+    "role": "ADMIN",
     "enabled": true,
     "password": "balaji",
-    "email": "bv@gmail.com",
+    "email": "bvis@gmail.com",
     "contactNumber": 7777777777,
     "addresses": [
       {
@@ -20,8 +20,16 @@
     ]
   }
 
-
+ADMIN
   {
+    "email":"bvis@gmail.com",
+    "password":"balaji"
+  }
+
+USER
+   {
     "email":"bv@gmail.com",
     "password":"balaji"
   }
+
+  {"test":"test data"}

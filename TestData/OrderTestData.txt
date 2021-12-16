@@ -1,0 +1,23 @@
+{
+  "userId": "61b88b16a75ca4e5d8a9ba3c",
+  "orderTotal": 80.0,
+  "orderCount": 2,
+  "shippingId": "61b88a77a75ca4e5d8a9ba33",
+  "billingId": "61b88a77a75ca4e5d8a9ba33",
+  "orderItems": [
+    {
+      "total": 38.0,
+      "productId": "61b49463d2e270f3f448d5cc",
+      "productCount": 1,
+      "buyingPrice": 18.0,
+      "productName": "Paracetemol"
+    },
+    {
+      "total": 22.0,
+      "productId": "61b49463d2e270f3f448d5cf",
+      "productCount": 1,
+      "buyingPrice": 32.0,
+      "productName": "Combiflame"
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { auth, authAdmin } = require("../middleware/authentication");
 const {
   getAllProducts,
   getProductById,
@@ -10,11 +11,11 @@ const {
 //router.post("/register", register);
 //router.post("/login", login);
 
-router.route("/").get(getAllProducts).post(createProduct);
+router.route("/").get(getAllProducts).post(auth, authAdmin, createProduct);
 router
   .route("/:id")
   .get(getProductById)
-  .delete(deleteProductById)
-  .patch(updateProductById);
+  .delete(auth, authAdmin, deleteProductById)
+  .patch(auth, authAdmin, updateProductById);
 
 module.exports = router;

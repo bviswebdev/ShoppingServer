@@ -1,6 +1,7 @@
 const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, UnauthenticatedError } = require("../errors");
 const { productModel } = require("../models/ProductModel");
+const { auth, authAdmin } = require("../middleware/authentication");
 
 const getAllProducts = async (req, res) => {
   const data = await productModel.find({});
@@ -21,21 +22,42 @@ const getProductById = async (req, res) => {
 
 const createProduct = async (req, res) => {
   //const data = await productModel.find({});
-  const data = await productModel.create(req.body);
-  res.status(StatusCodes.CREATED).json({ statusMsg: "success", data });
+  //console.log(req.body);
+  let createData = req.body;
+  if (createData.productImage && createData.productImage.fileSource) {
+    createData.productImage.fileSource = Buffer.from(
+      createData.productImage.fileSource,
+      "base64"
+    );
+  }
+
+  const data = await productModel.create(createData);
+  //const data = { middleware: "middleware working" };
+  res
+    .status(StatusCodes.CREATED)
+    .json({ statusMsg: "success", data: req.body });
 };
 
 const updateProductById = async (req, res) => {
   //const data = await productModel.find({});
+  console.log("inside update");
   const {
     params: { id: productId },
   } = req;
 
+  let updateData = req.body;
+  if (updateData.productImage && updateData.productImage.fileSource) {
+    updateData.productImage.fileSource = Buffer.from(
+      updateData.productImage.fileSource,
+      "base64"
+    );
+  }
+  //console.log(updateData);
   const data = await productModel.findByIdAndUpdate(
     {
       _id: productId,
     },
-    req.body,
+    updateData,
     { new: true, runValidators: true }
   );
   res.status(StatusCodes.OK).json({ statusMsg: "success", data });

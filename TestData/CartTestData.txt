@@ -1,0 +1,38 @@
+{
+  "userId": "61b88b16a75ca4e5d8a9ba3c",
+  "grandTotal": 182.0,
+  "cartItems": [
+    {
+      "itemTotal": 30.0,
+      "productId": "61b49463d2e270f3f448d5cc",
+      "productCount": 2,
+      "buyingPrice": 60.0,
+      "isAvailable": true,
+      "cartItemProduct": {
+        "productCode": "PRDABC123DEFX",
+        "productImageUrl": "assets/productimages/PRDABC123DEFX.jpg",
+        "productName": "Paracetamol",
+        "productBrand": "Cipla",
+        "productDescription": "An antipyretic medicine used for fever.",
+        "productPrice": 20.0,
+        "productQtyAvailable": 50
+      }
+    },
+    {
+      "itemTotal": 108.0,
+      "productId": "61b49463d2e270f3f448d5cf",
+      "productCount": 2,
+      "buyingPrice": 54.0,
+      "isAvailable": true,
+      "cartItemProduct": {
+        "productCode": "PRDDEF123GHIX",
+        "productImageUrl": "assets/productimages/PRDDEF123GHIX.jpg",
+        "productName": "Combiflame",
+        "productBrand": "Cipla",
+        "productDescription": "An antipyretic medicine used for fever.",
+        "productPrice": 22.0,
+        "productQtyAvailable": 49
+      }
+    }    
+  ]
+}
