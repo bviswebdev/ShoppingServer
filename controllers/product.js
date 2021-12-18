@@ -77,12 +77,25 @@ const deleteProductById = async (req, res) => {
 };
 
 const getMostPurchasedProducts = async (req, res) => {
-  const data = await productModel.find({}).sort({ purchases: -1 }).limit(5);
+  const data = await productModel
+    .find({})
+    .sort({ purchases: -1 })
+    .limit(5)
+    .lean();
+
   res.status(StatusCodes.OK).json({ statusMsg: "success", data });
 };
 
 const getMostViewedProducts = async (req, res) => {
-  const data = await productModel.find({}).sort({ views: -1 }).limit(5);
+  const data = await productModel.find({}).sort({ views: -1 }).limit(5).lean();
+  /*let arr = [];
+  data.forEach((d) => {
+    const dat = JSON.parse(JSON.stringify(d));
+    dat.productImage.fileSource = Buffer.from(
+      dat.productImage.fileSource
+    ).toString("base64");
+    arr.push(dat);
+  });*/
   res.status(StatusCodes.OK).json({ statusMsg: "success", data });
 };
 
