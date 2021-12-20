@@ -4,7 +4,7 @@ const { productModel } = require("../models/ProductModel");
 const { auth, authAdmin } = require("../middleware/authentication");
 
 const getAllProducts = async (req, res) => {
-  const data = await productModel.find({});
+  const data = await productModel.find({}).lean();
   res.status(StatusCodes.OK).json({ statusMsg: "success", data });
 };
 
@@ -14,9 +14,11 @@ const getProductById = async (req, res) => {
     params: { id: productId },
   } = req;
 
-  const data = await productModel.findById({
-    _id: productId,
-  });
+  const data = await productModel
+    .findById({
+      _id: productId,
+    })
+    .lean();
   res.status(StatusCodes.OK).json({ statusMsg: "success", data });
 };
 

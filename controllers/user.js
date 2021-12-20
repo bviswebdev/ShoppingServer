@@ -34,11 +34,48 @@ const loginUser = async (req, res) => {
     userId: user._id,
   });
 
-  res.status(StatusCodes.OK).json({ user, cart, token });
+  const userName = user.firstName + " " + user.lastName;
+  const userEmail = user.email;
+  const role = user.role;
+
+  res.status(StatusCodes.OK).json({
+    statusMsg: "success",
+    data: { user, cart, token, role, email: userEmail, userName },
+  });
+};
+
+const getLoginUserInfo = async (req, res) => {
+  //const { email } = req.body;
+
+  const {
+    params: { id: emailId },
+  } = req;
+
+  if (!emailId) {
+    throw new BadRequestError("Please provide email");
+  }
+  const user = await userModel.findOne({ emailId });
+  if (!user) {
+    throw new UnauthenticatedError("Invalid Credentials");
+  }
+
+  const cart = await cartModel.findOne({
+    userId: user._id,
+  });
+
+  const userName = user.firstName + " " + user.lastName;
+  const userEmail = user.email;
+  const role = user.role;
+
+  res.status(StatusCodes.OK).json({
+    statusMsg: "success",
+    data: { user, cart, role, email: userEmail, userName },
+  });
 };
 
 module.exports = {
   getAllUsers,
   registerUser,
   loginUser,
+  getLoginUserInfo,
 };
