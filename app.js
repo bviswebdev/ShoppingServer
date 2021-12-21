@@ -12,6 +12,7 @@ const app = express();
 
 const connectDB = require("./db/connect");
 const authenticateUser = require("./middleware/authentication");
+
 // routers
 //const authRouter = require("./routes/auth");
 //const jobsRouter = require("./routes/jobs");

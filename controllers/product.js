@@ -8,6 +8,9 @@ const getAllProducts = async (req, res) => {
   res.status(StatusCodes.OK).json({ statusMsg: "success", data });
 };
 
+//query.and([{ color: 'green' }, { status: 'ok' }])
+//var query = require('url').parse(req.url,true).query;
+
 const getProductById = async (req, res) => {
   //const data = await productModel.find({});
   const {
@@ -22,22 +25,50 @@ const getProductById = async (req, res) => {
   res.status(StatusCodes.OK).json({ statusMsg: "success", data });
 };
 
+const getProductByNameandBrand = async (req, res) => {
+  //const data = await productModel.find({});
+  const {
+    query: { name: productName, brand: productBrand },
+  } = req;
+
+  const data = await productModel
+    .find(
+      {
+        name: productName,
+      },
+      { brand: productBrand }
+    )
+    .count();
+
+  res.status(StatusCodes.OK).json({ statusMsg: "success", data });
+};
+
 const createProduct = async (req, res) => {
   //const data = await productModel.find({});
-  //console.log(req.body);
-  let createData = req.body;
-  if (createData.productImage && createData.productImage.fileSource) {
+  //console.log(req.file);
+  let createData = {};
+  if (req.body.jsonData) {
+    createData = JSON.parse(req.body.jsonData);
+    //console.log(createData);
+    createData._id = undefined;
+    createData.productImage._id = undefined;
+    createData.category._id = undefined;
+
+    if (req.file) {
+      createData.productImage.fileSource = req.file.buffer;
+    }
+  }
+  //let createData = req.body;
+  /*if (createData.productImage && createData.productImage.fileSource) {
     createData.productImage.fileSource = Buffer.from(
       createData.productImage.fileSource,
       "base64"
     );
-  }
-
+  }*/
+  console.log(createData);
   const data = await productModel.create(createData);
   //const data = { middleware: "middleware working" };
-  res
-    .status(StatusCodes.CREATED)
-    .json({ statusMsg: "success", data: req.body });
+  res.status(StatusCodes.CREATED).json({ statusMsg: "success", data });
 };
 
 const updateProductById = async (req, res) => {
@@ -115,4 +146,5 @@ module.exports = {
   getMostPurchasedProducts,
   getMostViewedProducts,
   getAllCategories,
+  getProductByNameandBrand,
 };

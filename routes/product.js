@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const { auth, authAdmin } = require("../middleware/authentication");
+const multer = require("multer");
+//const upload = multer({ dest: 'uploads/' })
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 const {
   getAllProducts,
   getProductById,
@@ -10,6 +14,7 @@ const {
   getMostPurchasedProducts,
   getMostViewedProducts,
   getAllCategories,
+  getProductByNameandBrand,
 } = require("../controllers/product");
 //router.post("/register", register);
 //router.post("/login", login);
@@ -17,7 +22,12 @@ const {
 router.route("/mvproducts").get(getMostViewedProducts);
 router.route("/mpproducts").get(getMostPurchasedProducts);
 router.route("/categories").get(getAllCategories);
-router.route("/").get(getAllProducts).post(auth, authAdmin, createProduct);
+router.route("/count").get(getProductByNameandBrand);
+router
+  .route("/")
+  .get(getAllProducts)
+  .post(auth, authAdmin, upload.single("fileSource"), createProduct);
+
 router
   .route("/:id")
   .get(getProductById)
