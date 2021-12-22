@@ -10,11 +10,11 @@ const getAllCarts = async (req, res) => {
 const getCartById = async (req, res) => {
   //const data = await productModel.find({});
   const {
-    params: { id: cartId },
+    params: { id: cartUserId },
   } = req;
 
   const data = await cartModel.findById({
-    _id: cartId,
+    userId: cartUserId,
   });
   res.status(StatusCodes.OK).json({ statusMsg: "success", data });
 };
@@ -34,14 +34,14 @@ const updateCartById = async (req, res) => {
   //const data = await productModel.find({});
   console.log("inside update");
   const {
-    params: { id: cartId },
+    params: { id: cartUserId },
   } = req;
 
   let updateData = req.body;
   //console.log(updateData);
   const data = await cartModel.findByIdAndUpdate(
     {
-      _id: cartId,
+      userId: cartUserId,
     },
     updateData,
     { new: true, runValidators: true }
@@ -52,11 +52,11 @@ const updateCartById = async (req, res) => {
 const deleteCartById = async (req, res) => {
   //const data = await productModel.find({});
   const {
-    params: { id: cartId },
+    params: { id: cartUserId },
   } = req;
 
   const data = await cartModel.findByIdAndDelete({
-    _id: cartId,
+    userId: cartUserId,
   });
 
   res.status(StatusCodes.OK).json({ statusMsg: "success", data });
