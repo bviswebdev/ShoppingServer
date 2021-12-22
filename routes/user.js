@@ -6,10 +6,12 @@ const {
   registerUser,
   loginUser,
   getLoginUserInfo,
+  getUserByEmail,
 } = require("../controllers/user");
 //router.post("/register", register);
 //router.post("/login", login);
 
+router.route("/count").get(getUserByEmail);
 router.route("/").get(auth, authAdmin, getAllUsers);
 router.route("/:id").get(auth, getLoginUserInfo);
 router.route("/register").post(registerUser);

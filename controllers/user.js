@@ -56,7 +56,7 @@ const getLoginUserInfo = async (req, res) => {
   }
   const user = await userModel.findOne({ emailId });
   if (!user) {
-    throw new UnauthenticatedError("Invalid Credentials");
+    throw new UnauthenticatedError("Invalid Login");
   }
 
   const cart = await cartModel.findOne({
@@ -73,9 +73,25 @@ const getLoginUserInfo = async (req, res) => {
   });
 };
 
+const getUserByEmail = async (req, res) => {
+  //const data = await productModel.find({});
+  const {
+    query: { email: userEmail },
+  } = req;
+
+  const data = await userModel
+    .find({
+      email: userEmail,
+    })
+    .count();
+
+  res.status(StatusCodes.OK).json({ statusMsg: "success", data });
+};
+
 module.exports = {
   getAllUsers,
   registerUser,
   loginUser,
   getLoginUserInfo,
+  getUserByEmail,
 };

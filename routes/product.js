@@ -15,6 +15,7 @@ const {
   getMostViewedProducts,
   getAllCategories,
   getProductByNameandBrand,
+  getCategoryByName,
 } = require("../controllers/product");
 //router.post("/register", register);
 //router.post("/login", login);
@@ -23,6 +24,7 @@ router.route("/mvproducts").get(getMostViewedProducts);
 router.route("/mpproducts").get(getMostPurchasedProducts);
 router.route("/categories").get(getAllCategories);
 router.route("/count").get(getProductByNameandBrand);
+router.route("/categorycount").get(getCategoryByName);
 router
   .route("/")
   .get(getAllProducts)
@@ -32,6 +34,6 @@ router
   .route("/:id")
   .get(getProductById)
   .delete(auth, authAdmin, deleteProductById)
-  .patch(auth, authAdmin, updateProductById);
+  .patch(auth, authAdmin, upload.single("fileSource"), updateProductById);
 
 module.exports = router;

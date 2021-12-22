@@ -4,7 +4,7 @@ const { productModel } = require("../models/ProductModel");
 const { auth, authAdmin } = require("../middleware/authentication");
 
 const getAllProducts = async (req, res) => {
-  const data = await productModel.find({}).lean();
+  const data = await productModel.find({ isActive: true }).lean();
   res.status(StatusCodes.OK).json({ statusMsg: "success", data });
 };
 
@@ -38,6 +38,21 @@ const getProductByNameandBrand = async (req, res) => {
       },
       { brand: productBrand }
     )
+    .count();
+
+  res.status(StatusCodes.OK).json({ statusMsg: "success", data });
+};
+
+const getCategoryByName = async (req, res) => {
+  //const data = await productModel.find({});
+  const {
+    query: { name: categoryName },
+  } = req;
+
+  const data = await productModel
+    .find({
+      "category.catName": categoryName,
+    })
     .count();
 
   res.status(StatusCodes.OK).json({ statusMsg: "success", data });
@@ -78,14 +93,40 @@ const updateProductById = async (req, res) => {
     params: { id: productId },
   } = req;
 
-  let updateData = req.body;
-  if (updateData.productImage && updateData.productImage.fileSource) {
-    updateData.productImage.fileSource = Buffer.from(
-      updateData.productImage.fileSource,
-      "base64"
-    );
+  let createData = {};
+  let updateData = {};
+  if (req.body.jsonData) {
+    createData = JSON.parse(req.body.jsonData);
+    console.log(createData);
+    updateData["name"] = createData.name;
+    updateData["brand"] = createData.brand;
+    updateData["description"] = createData.description;
+    updateData["unitPrice"] = createData.unitPrice;
+    updateData["quantity"] = createData.quantity;
+    if (req.file) {
+      let productImage = {};
+      productImage["fileName"] = createData.productImage.fileName;
+      productImage["fileType"] = createData.productImage.fileType;
+      productImage["fileSize"] = createData.productImage.fileSize;
+      productImage["fileUrl"] = createData.productImage.fileUrl;
+      productImage["fileSource"] = req.file.buffer;
+      updateData["productImage"] = productImage;
+    }
+
+    console.log(req.file);
+    console.log(req.body);
+
+    updateData["isActive"] = createData.isActive;
+    let category = {};
+    category["catName"] = createData.category.catName;
+    category["catDesc"] = createData.category.catDesc;
+    category["catImgUrl"] = createData.category.catImgUrl;
+    category["catActive"] = createData.category.catActive;
+    updateData["category"] = category;
   }
-  //console.log(updateData);
+  console.log(updateData);
+  console.log(productId);
+
   const data = await productModel.findByIdAndUpdate(
     {
       _id: productId,
@@ -102,9 +143,13 @@ const deleteProductById = async (req, res) => {
     params: { id: productId },
   } = req;
 
-  const data = await productModel.findByIdAndDelete({
-    _id: productId,
-  });
+  const data = await productModel.findByIdAndUpdate(
+    {
+      _id: productId,
+    },
+    { isActive: false },
+    { new: true, runValidators: true }
+  );
 
   res.status(StatusCodes.OK).json({ statusMsg: "success", data });
 };
@@ -133,7 +178,9 @@ const getMostViewedProducts = async (req, res) => {
 };
 
 const getAllCategories = async (req, res) => {
-  const data = await productModel.find({}).distinct("category.catName");
+  const data = await productModel
+    .find({ isActive: true })
+    .distinct("category.catName");
   res.status(StatusCodes.OK).json({ statusMsg: "success", data });
 };
 
@@ -147,4 +194,5 @@ module.exports = {
   getMostViewedProducts,
   getAllCategories,
   getProductByNameandBrand,
+  getCategoryByName,
 };
