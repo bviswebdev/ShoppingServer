@@ -51,15 +51,16 @@ const updateUserAddressById = async (req, res) => {
     params: { id: appUserId },
   } = req;
 
-  let updateData = req.body;
-  updateData._id = undefined;
+  let updateAddressData = req.body;
+  updateAddressData._id = undefined;
 
-  //console.log(updateData);
-  const data = await cartModel.findByIdAndUpdate(
+  console.log(appUserId);
+  console.log(updateAddressData);
+  const data = await userModel.findByIdAndUpdate(
     {
       _id: appUserId,
     },
-    updateData,
+    { $push: { addresses: updateAddressData } },
     { new: true, runValidators: true }
   );
   res.status(StatusCodes.OK).json({ statusMsg: "success", data });
