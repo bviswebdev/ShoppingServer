@@ -23,6 +23,9 @@ const createCart = async (req, res) => {
   //const data = await productModel.find({});
   //console.log(req.body);
   let createData = req.body;
+  createData._id = undefined;
+  createData.CartItem._id = undefined;
+  createData.CartItem.CartItemProduct._id = undefined;
   const data = await cartModel.create(createData);
   //const data = { middleware: "middleware working" };
   res
@@ -38,6 +41,9 @@ const updateCartById = async (req, res) => {
   } = req;
 
   let updateData = req.body;
+  updateData._id = undefined;
+  updateData.CartItem._id = undefined;
+  updateData.CartItem.CartItemProduct._id = undefined;
   //console.log(updateData);
   const data = await cartModel.findByIdAndUpdate(
     {
