@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { auth, authUser } = require("../middleware/authentication");
+const { auth, authUser, authAdmin } = require("../middleware/authentication");
 const {
   getAllOrders,
   getOrderById,
@@ -11,10 +11,13 @@ const {
 //router.post("/register", register);
 //router.post("/login", login);
 
-router.route("/").get(getAllOrders).post(auth, authUser, createOrder);
+router
+  .route("/")
+  .get(auth, authAdmin, getAllOrders)
+  .post(auth, authUser, createOrder);
 router
   .route("/:id")
-  .get(getOrderById)
+  .get(auth, authUser, getOrderById)
   .delete(auth, authUser, deleteOrderById)
   .patch(auth, authUser, updateOrderById);
 

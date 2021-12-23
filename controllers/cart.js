@@ -23,9 +23,16 @@ const createCart = async (req, res) => {
   //const data = await productModel.find({});
   //console.log(req.body);
   let createData = req.body;
+  console.log(createData);
   createData._id = undefined;
-  createData.CartItem._id = undefined;
-  createData.CartItem.CartItemProduct._id = undefined;
+  createData.cartItems.forEach((element) => {
+    element._id = undefined;
+    element.cartItemProduct._id = undefined;
+    element.cartItemProduct.productImageUrl = undefined;
+  });
+  //createData.CartItem._id = undefined;
+  //createData.CartItem.CartItemProduct._id = undefined;
+  console.log(createData);
   const data = await cartModel.create(createData);
   //const data = { middleware: "middleware working" };
   res
@@ -42,10 +49,14 @@ const updateCartById = async (req, res) => {
 
   let updateData = req.body;
   updateData._id = undefined;
-  updateData.CartItem._id = undefined;
-  updateData.CartItem.CartItemProduct._id = undefined;
+  updateData.cartItems.forEach((element) => {
+    element._id = undefined;
+    element.cartItemProduct._id = undefined;
+    element.cartItemProduct.productImageUrl = undefined;
+  });
+
   //console.log(updateData);
-  const data = await cartModel.findByIdAndUpdate(
+  const data = await cartModel.findOneAndUpdate(
     {
       userId: cartUserId,
     },
@@ -61,7 +72,7 @@ const deleteCartById = async (req, res) => {
     params: { id: cartUserId },
   } = req;
 
-  const data = await cartModel.findByIdAndDelete({
+  const data = await cartModel.deleteOne({
     userId: cartUserId,
   });
 

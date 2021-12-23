@@ -23,6 +23,8 @@ const createOrder = async (req, res) => {
   //const data = await productModel.find({});
   //console.log(req.body);
   let createData = req.body;
+  createData._id = undefined;
+  createData.orderDate = new Date(createData.orderDate);
   const data = await orderModel.create(createData);
   //const data = { middleware: "middleware working" };
   res

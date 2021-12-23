@@ -44,6 +44,27 @@ const loginUser = async (req, res) => {
   });
 };
 
+const updateUserAddressById = async (req, res) => {
+  //const data = await productModel.find({});
+  console.log("inside update");
+  const {
+    params: { id: appUserId },
+  } = req;
+
+  let updateData = req.body;
+  updateData._id = undefined;
+
+  //console.log(updateData);
+  const data = await cartModel.findByIdAndUpdate(
+    {
+      _id: appUserId,
+    },
+    updateData,
+    { new: true, runValidators: true }
+  );
+  res.status(StatusCodes.OK).json({ statusMsg: "success", data });
+};
+
 const getLoginUserInfo = async (req, res) => {
   //const { email } = req.body;
 
@@ -54,13 +75,13 @@ const getLoginUserInfo = async (req, res) => {
   if (!emailId) {
     throw new BadRequestError("Please provide email");
   }
-  const user = await userModel.findOne({ emailId });
+  const user = await userModel.findOne({ email: emailId });
   if (!user) {
     throw new UnauthenticatedError("Invalid Login");
   }
 
   const cart = await cartModel.findOne({
-    userId: user._id,
+    userId: user._id.toString(),
   });
 
   const userName = user.firstName + " " + user.lastName;
@@ -94,4 +115,5 @@ module.exports = {
   loginUser,
   getLoginUserInfo,
   getUserByEmail,
+  updateUserAddressById,
 };
