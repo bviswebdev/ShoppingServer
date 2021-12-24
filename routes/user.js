@@ -14,7 +14,7 @@ const {
 
 router.route("/count").get(getUserByEmail);
 router.route("/").get(auth, authAdmin, getAllUsers);
-router.route("/:id").get(auth, authUser, getLoginUserInfo);
+router.route("/:id").get(auth, getLoginUserInfo);
 router.route("/address/:id").patch(auth, authUser, updateUserAddressById);
 router.route("/register").post(registerUser);
 router.route("/login").post(loginUser);

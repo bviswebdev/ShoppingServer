@@ -21,9 +21,9 @@ const getCartById = async (req, res) => {
 
 const createCart = async (req, res) => {
   //const data = await productModel.find({});
-  //console.log(req.body);
+
   let createData = req.body;
-  console.log(createData);
+
   createData._id = undefined;
   createData.cartItems.forEach((element) => {
     element._id = undefined;
@@ -32,7 +32,7 @@ const createCart = async (req, res) => {
   });
   //createData.CartItem._id = undefined;
   //createData.CartItem.CartItemProduct._id = undefined;
-  console.log(createData);
+
   const data = await cartModel.create(createData);
   //const data = { middleware: "middleware working" };
   res
@@ -42,7 +42,7 @@ const createCart = async (req, res) => {
 
 const updateCartById = async (req, res) => {
   //const data = await productModel.find({});
-  console.log("inside update");
+
   const {
     params: { id: cartUserId },
   } = req;
@@ -55,7 +55,6 @@ const updateCartById = async (req, res) => {
     element.cartItemProduct.productImageUrl = undefined;
   });
 
-  //console.log(updateData);
   const data = await cartModel.findOneAndUpdate(
     {
       userId: cartUserId,

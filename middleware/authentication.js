@@ -5,8 +5,7 @@ const { UnauthenticatedError } = require("../errors");
 const auth = async (req, res, next) => {
   // check header
   const authHeader = req.headers.authorization;
-  console.log("inside autnetication");
-  console.log(authHeader);
+
   if (!authHeader || !authHeader.startsWith("Bearer")) {
     throw new UnauthenticatedError("Authentication invalid");
   }
@@ -31,7 +30,7 @@ const authAdmin = async (req, res, next) => {
   // check header
 
   const { role } = req.user;
-  console.log(role);
+
   if (!role) {
     throw new UnauthenticatedError("Role Based Authentication invalid");
   }
@@ -47,7 +46,7 @@ const authUser = async (req, res, next) => {
   // check header
 
   const { role } = req.user;
-  console.log(role);
+
   if (!role) {
     throw new UnauthenticatedError("Role Based Authentication invalid");
   }

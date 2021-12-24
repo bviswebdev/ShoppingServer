@@ -60,11 +60,11 @@ const getCategoryByName = async (req, res) => {
 
 const createProduct = async (req, res) => {
   //const data = await productModel.find({});
-  //console.log(req.file);
+
   let createData = {};
   if (req.body.jsonData) {
     createData = JSON.parse(req.body.jsonData);
-    //console.log(createData);
+
     createData._id = undefined;
     createData.productImage._id = undefined;
     createData.category._id = undefined;
@@ -80,7 +80,7 @@ const createProduct = async (req, res) => {
       "base64"
     );
   }*/
-  console.log(createData);
+
   const data = await productModel.create(createData);
   //const data = { middleware: "middleware working" };
   res.status(StatusCodes.CREATED).json({ statusMsg: "success", data });
@@ -88,7 +88,7 @@ const createProduct = async (req, res) => {
 
 const updateProductById = async (req, res) => {
   //const data = await productModel.find({});
-  console.log("inside update");
+
   const {
     params: { id: productId },
   } = req;
@@ -97,7 +97,7 @@ const updateProductById = async (req, res) => {
   let updateData = {};
   if (req.body.jsonData) {
     createData = JSON.parse(req.body.jsonData);
-    console.log(createData);
+
     updateData["name"] = createData.name;
     updateData["brand"] = createData.brand;
     updateData["description"] = createData.description;
@@ -113,9 +113,6 @@ const updateProductById = async (req, res) => {
       updateData["productImage"] = productImage;
     }
 
-    console.log(req.file);
-    console.log(req.body);
-
     updateData["isActive"] = createData.isActive;
     let category = {};
     category["catName"] = createData.category.catName;
@@ -124,8 +121,6 @@ const updateProductById = async (req, res) => {
     category["catActive"] = createData.category.catActive;
     updateData["category"] = category;
   }
-  console.log(updateData);
-  console.log(productId);
 
   const data = await productModel.findByIdAndUpdate(
     {

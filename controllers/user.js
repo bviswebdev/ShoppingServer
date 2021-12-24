@@ -46,7 +46,7 @@ const loginUser = async (req, res) => {
 
 const updateUserAddressById = async (req, res) => {
   //const data = await productModel.find({});
-  console.log("inside update");
+
   const {
     params: { id: appUserId },
   } = req;
@@ -54,8 +54,6 @@ const updateUserAddressById = async (req, res) => {
   let updateAddressData = req.body;
   updateAddressData._id = undefined;
 
-  console.log(appUserId);
-  console.log(updateAddressData);
   const data = await userModel.findByIdAndUpdate(
     {
       _id: appUserId,
